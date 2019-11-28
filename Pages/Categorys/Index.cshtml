@@ -1,0 +1,348 @@
+﻿@page
+@model tbkk_AC.Pages.Categorys.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Asset Control</a>
+            </li>
+            <li class="breadcrumb-item active">Managment</li>
+            <li class="breadcrumb-item active">Brand</li>
+        </ol>
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="dataTable_length">
+                    <i class="fas fa-table"> Category</i>
+                    <div style="float: right">
+                        <button type="button" class="btn btn-primary catgs-modal" data-toggle="modal" data-target="#createCatgsModal">
+                            Create
+                        </button>
+                        <!--<a class="btn btn-info" asp-page="Create">Create New</a>-->
+                        <button type="button" class="btn btn-info">Import data</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Category[0].CategoryID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Category[0].CategoryName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Category[0].Image)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Category[0].TypeName)
+                                </th>
+                                <th>
+                                    Edit
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Category)
+                            {
+                            <tr>
+                                <td id="c1" class="catgs-modal" data-toggle="modal" data-id="@item.CategoryID" data-target="#detailCatgsModal">
+                                    @Html.DisplayFor(modelItem => item.CategoryID)
+                                </td>
+                                <td id="c1" class="catgs-modal" data-toggle="modal" data-id="@item.CategoryID" data-target="#detailCatgsModal">
+                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                </td>
+                                <td id="c1" class="catgs-modal" data-toggle="modal" data-id="@item.CategoryID" data-target="#detailCatgsModal">
+                                    @Html.DisplayFor(modelItem => item.Image)
+                                </td>
+                                <td id="c1" class="catgs-modal" data-toggle="modal" data-id="@item.CategoryID" data-target="#detailCatgsModal">
+                                    @Html.DisplayFor(modelItem => item.TypeName)
+                                </td>
+                                <td width="5%">
+                                    <button type="button" class="btn btn-secondary btn-block catgs-modal" data-toggle="modal" data-target="#editCatgsModal" data-id="@item.CategoryID">Edit</button>
+                                </td>
+                                <td width="5%">
+                                    <button type="button" class="btn btn-secondary catgs-modal" data-toggle="modal" data-target="#deleteCatgsModal" data-id="@item.CategoryID">Delete</button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="sticky-footer">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright © Your Website 2019</span>
+            </div>
+        </div>
+    </footer>
+</div>
+<!--modal create-->
+<div class="modal fade" id="createCatgsModal" tabindex="-1" role="dialog" aria-labelledby="createCatgsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCatgsModalLabel">Create</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="modal-create">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Dept Name</label>
+                        <input type="text" class="form-control" id="createCatgName" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Example Image input</label>
+                        <input type="file" class="form-control-file" id="createCatgimage">
+                    </div>
+                    <div class="form-group">
+                        
+                        <select class="form-control" id="createCatgTypeName">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="Asset">Asset</option>
+                            <option value="License">License</option>
+                            <option value="Accessory">Accessory</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="createSave">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end modal create-->
+<!--modal edit-->
+<div class="modal fade" id="editCatgsModal" tabindex="-1" role="dialog" aria-labelledby="editCatgsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCatgsModalLabel">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="modal-edit">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Catg ID</label>
+                        <input readonly type="text" class="form-control txtCatgID" id="txtCatgID">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Catg Name</label>
+                        <input type="text" class="form-control" id="txtCatgName" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Example Image input</label>
+                        <input type="file" class="form-control-file" id="txtCatgImage">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="txtCatgTypeName">
+                            <option value="Asset">Asset</option>
+                            <option value="License">License</option>
+                            <option value="Accessory">Accessory</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="CatgsSave">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end modal edit-->
+<!--modal detail-->
+<div class="modal fade" id="detailCatgsModal" tabindex="-1" role="dialog" aria-labelledby="detailCatgsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailCatgsModalLabel">details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="model-details">
+                <div class="modal-body">
+                    <div class="row ">
+                        <div class="col-7">
+                            <label for="assetIdLabel">Catg ID</label>
+                            <p class=" txtCatgID" id="catgid"></p>
+                            <br>
+                            <label for="deptNameLabel">Catg Name</label>
+                            <p id="catgname"></p>
+                            <label for="deptNameLabel">Type Name</label>
+                            <p id="catgtypename"></p>
+                        </div>
+                        <div class="col-3">
+                            <label for="deptImgLabel">Example Image</label>
+                            <img src="~/images/alpacca2.jpg style="width: 200px; height: 200px;" id="catgimage">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end modal detail-->
+<!--modal del-->
+<div class="modal fade" id="deleteCatgsModal" tabindex="-1" role="dialog" aria-labelledby="deleteCatgsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCatgsModalLabel">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ต้องการจะลบข้อมูลไหม
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="catgsDelete">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal del-->
+
+@section Scripts {
+    <script>
+
+        $(document).on("click", ".catgs-modal", function () {
+            let id = $(this).data('id');
+            $.get('/api/Categories/' + id, {}, (response) => {
+                $(".modal-body #txtCatgID").val(id);
+                $(".modal-body #txtCatgName").val(response.categoryName);
+                $(".modal-body #txtCatgTypeName").val(response.typeName);
+                $(".modal-body #txtCatgImage").val(response.image);
+                
+                $("#catgid").text(id);
+                $("#catgname").text(response.categoryName);
+                $("#catgimage").text(response.image);
+                $("#catgtypename").text(response.typeName);
+                console.log(typeName);
+            });
+        });
+
+
+        $(document).on("submit", "#createCatgsModal #modal-create", function (e) {
+            e.preventDefault();
+            var data = {
+                CategoryName: $(".modal-body #createCatgName").val(),
+                Image: $(".modal-body #createCatgimage").val(),
+                TypeName: $(".modal-body #createCatgTypeName").val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Categories',
+                contentType: 'application/json',
+                data: JSON.stringify(data), // access in body
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log(data)
+                console.log(msg);
+                alert('FAIL');
+            });
+
+        });//create
+
+        $(document).on("submit", "#detailCatgsModal #model-details", function (e) {
+            e.preventDefault();
+
+            var id = $(".modal-body #txtCatgID").val();
+            var data = {
+                CategoryID: id,
+                CategoryName: $(".modal-body #txtCatgName").val(),
+                Image: $(".modal-body #txtCatgImage").val(),
+                TypeName: $(".modal-body #txtCatgTypeName").val()
+            };
+            console.log('aaa');
+            $.ajax({
+                type: 'GET',
+                url: '/api/Categories/' + id,
+                contentType: 'application/json',
+                data: JSON.stringify(data), // access in body
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log('FAIL');
+                alert('FAIL');
+            });
+
+        });//details
+
+
+        $(document).on("submit", "#editCatgsModal #modal-edit", function (e) {
+            e.preventDefault();
+
+            var id = $(".modal-body #txtCatgID").val();
+            var data = {
+                CategoryID: id,
+                CategoryName: $(".modal-body #txtCatgName").val(),
+                Image: $(".modal-body #txtCatgImage").val(),
+                TypeName: $(".modal-body #txtCatgTypeName").val()
+            }; console.log(data);
+
+            $.ajax({
+                type: 'PUT',
+                url: '/api/Categories/' + id,
+                contentType: 'application/json',
+                data: JSON.stringify(data), // access in body
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log('FAIL');
+                alert('FAIL');
+            });
+
+        });//edit
+
+        $(document).on("click", "#catgsDelete", function () {
+            let id = $(".modal-body #txtCatgID").val();
+            $.ajax({
+                type: 'DELETE',
+                url: '/api/Categories/' + id,
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log(msg);
+                alert('FAIL');
+            });
+        });//del
+    </script>
+}

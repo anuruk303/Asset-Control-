@@ -1,0 +1,320 @@
+﻿@page
+@model tbkk_AC.Pages.Brands.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Asset Control</a>
+            </li>
+            <li class="breadcrumb-item active">Managment</li>
+            <li class="breadcrumb-item active">Brand</li>
+        </ol>
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="dataTable_length">
+                    <i class="fas fa-table"> Brand</i>
+                    <div style="float: right">
+                        <button type="button" class="btn btn-primary brands-modal" data-toggle="modal" data-target="#createBrandsModal">
+                            Create
+                        </button>
+                        <!--<a class="btn btn-info" asp-page="Create">Create New</a>-->
+                        <button type="button" class="btn btn-info">Import data</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Brand[0].BrandID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Brand[0].BrandName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Brand[0].Image)
+                                </th>
+                                <th>
+                                    Edit
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Brand)
+                            {
+                                <tr>
+                                    <td id="c1" class="brands-modal" data-toggle="modal" data-id="@item.BrandID" data-target="#detailBrandsModal">
+                                        @Html.DisplayFor(modelItem => item.BrandID)
+                                    </td>
+                                    <td id="c1" class="brands-modal" data-toggle="modal" data-id="@item.BrandID" data-target="#detailBrandsModal">
+                                        @Html.DisplayFor(modelItem => item.BrandName)
+                                    </td>
+                                    <td id="c1" class="brands-modal" data-toggle="modal" data-id="@item.BrandID" data-target="#detailBrandsModal">
+                                        @Html.DisplayFor(modelItem => item.Image)
+                                    </td>
+                                    <td width="5%">
+                                        <button  type="button" class="btn btn-secondary btn-block brands-modal" data-toggle="modal" data-target="#editBrandsModal" data-id="@item.BrandID">Edit</button>
+                                    </td>
+                                    <td width="5%">
+                                        <button type="button" class="btn btn-secondary brands-modal" data-toggle="modal" data-target="#deleteBrandsModal" data-id="@item.BrandID">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="sticky-footer">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright © Your Website 2019</span>
+            </div>
+        </div>
+    </footer>
+    <div></div>
+</div>
+
+<!--modal create-->
+<div class="modal fade" id="createBrandsModal" tabindex="-1" role="dialog" aria-labelledby="createBrandsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBrandsModalLabel">Create</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="modal-create">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Brand Name</label>
+                        <input type="text" class="form-control" id="createBrandName" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Example Image input</label>
+                        <input type="file" class="form-control-file" id="createBrandimage">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="createSave">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end modal create-->
+<!--modal edit-->
+<div class="modal fade" id="editBrandsModal" tabindex="-1" role="dialog" aria-labelledby="editBrandsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBrandsModalLabel">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="modal-edit">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Brand ID</label>
+                        <input readonly type="text" class="form-control BrandedID" id="BrandedID">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Brand Name</label>
+                        <input type="text" class="form-control" id="BrandedName" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Example Image input</label>
+                        <input type="file" class="form-control-file" id="image">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="assetsSave">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end modal edit-->
+<!--modal detail-->
+<div class="modal fade" id="detailBrandsModal" tabindex="-1" role="dialog" aria-labelledby="detailBrandsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailBrandsModalLabel">details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="model-details">
+                <div class="modal-body">
+                    <div class="row ">
+                        <div class="col-7">
+                            <label for="assetIdLabel">Brand ID</label>
+                            <p class=" BrandedID" id="brandid"></p>
+                            <br>
+                            <label for="assetNameLabel">Asset Name</label>
+                            <p id="brandname"></p>
+                        </div>
+                        <div class="col-3">
+                            <label for="assetImgLabel">Example Image</label>
+                            <img src="~/images/alpacca2.jpg style="width: 200px; height: 200px;" id="brandimage">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end modal detail-->
+<!--modal del-->
+<div class="modal fade" id="deleteBrandsModal" tabindex="-1" role="dialog" aria-labelledby="deleteBrandsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteBrandsModalLabel">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ต้องการจะลบข้อมูลไหม
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="brandsDelete">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal del-->
+
+@section Scripts {
+    <script>
+
+        $(document).on("click", ".brands-modal", function () {
+            let id = $(this).data('id');
+            $.get('/api/Brands/' + id, {}, (response) => {
+                $(".modal-body #BrandedID").val(id);
+                $(".modal-body #BrandedName").val(response.brandName);
+                $(".modal-body #BrandedImage").val(response.image);
+                $("#brandid").text(id);
+                $("#brandname").text(response.brandName);
+                $("#brandimage").text(response.image);
+            });
+        });
+
+
+        $(document).on("submit", "#createBrandsModal #modal-create", function (e) {
+            e.preventDefault();
+            var data = {
+                BrandName: $(".modal-body #createBrandName").val(),
+                Image: $(".modal-body #createBrandimage").val(),
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Brands',
+                contentType: 'application/json',
+                data: JSON.stringify(data), // access in body
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log(data)
+                console.log(msg);
+                alert('FAIL');
+            });
+
+        });//create
+
+        $(document).on("submit", "#detailBrandsModal #model-details", function (e) {
+            e.preventDefault();
+
+            var id = $(".modal-body #BrandedID").val();
+            var data = {
+                BrandID: id,
+                BrandName: $(".modal-body #BrandedName").val(),
+                Image: $(".modal-body #BrandedImage").val(),
+            };
+            console.log('aaa');
+            $.ajax({
+                type: 'GET',
+                url: '/api/Brands/' + id,
+                contentType: 'application/json',
+                data: JSON.stringify(data), // access in body
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log('FAIL');
+                alert('FAIL');
+            });
+
+        });//details
+
+
+        $(document).on("submit", "#editBrandsModal #modal-edit", function (e) {
+            e.preventDefault();
+
+            var id = $(".modal-body #BrandedID").val();
+            var data = {
+                BrandID: id,
+                BrandName: $(".modal-body #BrandedName").val(),
+                Image: $(".modal-body #BrandedImage").val(),
+            }; console.log(data);
+
+            $.ajax({
+                type: 'PUT',
+                url: '/api/Brands/' + id,
+                contentType: 'application/json',
+                data: JSON.stringify(data), // access in body
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log('FAIL');
+                alert('FAIL');
+            });
+
+        });//edit
+
+        $(document).on("click", "#brandsDelete", function () {
+            let id = $(".modal-body #BrandedID").val();
+            $.ajax({
+                type: 'DELETE',
+                url: '/api/Brands/' + id,
+            }).done(function () {
+                console.log('SUCCESS');
+                location.reload();
+            }).fail(function (msg) {
+                console.log(msg);
+                alert('FAIL');
+            });
+        });//del
+    </script>
+}
